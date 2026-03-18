@@ -49,5 +49,4 @@ The final pipeline is notebook-based and includes setup, full experiments, and a
 3. Run full analysis:
    - set `RUN_MODE = "full"` in `notebooks/02_analysis_viz.ipynb`
    - execute the notebook
-4. Generate report PDF:
-   - see `report/README.md`
+
