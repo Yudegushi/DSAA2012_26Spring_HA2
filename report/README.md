@@ -12,7 +12,7 @@ If LaTeX is installed and available in your PATH:
 
 ```bash
 cd report
-pdflatex -interaction=nonstopmode main.tex
+tools/tectonic -X compile report/main.tex --outdir report
 ```
 
 Output PDF:
