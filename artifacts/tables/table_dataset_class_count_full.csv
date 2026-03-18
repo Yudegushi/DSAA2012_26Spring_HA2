@@ -1,0 +1,102 @@
+label_id,dataset_category,prompt_class,n_samples
+5,airplanes,airplane,800
+3,Motorbikes,motorbike,798
+0,Faces,centered face,435
+1,Faces_easy,off-center face,435
+94,watch,watch,239
+2,Leopards,leopard,200
+12,bonsai,bonsai,128
+19,car_side,side of a car,123
+55,ketch,ketch,114
+23,chandelier,chandelier,107
+47,hawksbill,hawksbill,100
+46,grand_piano,grand piano,99
+13,brain,brain,98
+16,butterfly,butterfly,91
+50,helicopter,helicopter,88
+63,menorah,menorah,87
+92,trilobite,trilobite,86
+86,starfish,starfish,86
+54,kangaroo,kangaroo,86
+15,buddha,buddha,85
+39,ewer,ewer,85
+90,sunflower,sunflower,85
+81,scorpion,scorpion,84
+75,revolver,revolver,82
+57,laptop,laptop,81
+51,ibis,ibis,80
+58,llama,llama,78
+65,minaret,minaret,76
+93,umbrella,umbrella,75
+35,electric_guitar,electric guitar,75
+26,crab,crab,73
+27,crayfish,crayfish,70
+25,cougar_face,face of a cougar cat,69
+34,dragonfly,dragonfly,68
+31,dalmatian,dalmatian,67
+41,flamingo,flamingo,67
+40,ferry,ferry,67
+60,lotus,lotus,66
+33,dolphin,dolphin,65
+53,joshua_tree,joshua tree,64
+38,euphonium,euphonium,64
+36,elephant,elephant,64
+84,soccer_ball,soccer ball,64
+88,stop_sign,stop sign,64
+79,schooner,schooner,63
+22,chair,chair,62
+56,lamp,lamp,61
+100,yin_yang,yin and yang symbol,60
+96,wheelchair,wheelchair,59
+76,rhino,rhino,59
+21,cellphone,cellphone,59
+87,stegosaurus,stegosaurus,59
+74,pyramid,pyramid,57
+82,sea_horse,sea horse,57
+30,cup,cup,57
+98,windsor_chair,windsor chair,56
+66,nautilus,nautilus,55
+4,accordion,accordion,55
+9,bass,bass,54
+49,hedgehog,hedgehog,54
+72,pizza,pizza,53
+37,emu,emu,53
+32,dollar_bill,dollar bill,52
+29,crocodile_head,head of a  crocodile,51
+45,gramophone,gramophone,51
+28,crocodile,crocodile,50
+17,camera,camera,50
+77,rooster,rooster,49
+91,tick,tick,49
+69,pagoda,pagoda,47
+24,cougar_body,body of a cougar cat,47
+20,ceiling_fan,ceiling fan,47
+8,barrel,barrel,47
+10,beaver,beaver,46
+85,stapler,stapler,45
+42,flamingo_head,head of a flamingo,45
+71,pigeon,pigeon,45
+18,cannon,cannon,43
+14,brontosaurus,brontosaurus,43
+61,mandolin,mandolin,43
+48,headphone,headphone,42
+7,ant,ant,42
+6,anchor,anchor,42
+59,lobster,lobster,41
+62,mayfly,mayfly,40
+78,saxophone,saxophone,40
+99,wrench,wrench,39
+80,scissors,scissors,39
+68,okapi,okapi,39
+70,panda,panda,38
+95,water_lilly,water lilly,37
+67,octopus,octopus,35
+89,strawberry,strawberry,35
+83,snoopy,snoopy (cartoon beagle),35
+43,garfield,garfield,34
+44,gerenuk,gerenuk,34
+97,wild_cat,wild cat,34
+73,platypus,platypus,34
+11,binocular,binocular,33
+64,metronome,metronome,32
+52,inline_skate,inline skate,31

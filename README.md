@@ -17,7 +17,10 @@ The final pipeline is notebook-based and includes setup, full experiments, and a
 - Statistics and visualization:
   - bootstrap confidence intervals
   - McNemar test (paired significance)
-  - confusion pairs and qualitative case grids
+  - dataset distribution visualizations
+  - A1 seed-level variance visualization
+  - A2 dedicated aggregation comparison figure
+  - confusion taxonomy and qualitative case grids
 
 ## Key Full-Run Results (Top-1 Accuracy)
 

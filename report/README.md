@@ -13,7 +13,6 @@ If LaTeX is installed and available in your PATH:
 ```bash
 cd report
 pdflatex -interaction=nonstopmode main.tex
-pdflatex -interaction=nonstopmode main.tex
 ```
 
 Output PDF:

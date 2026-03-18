@@ -16,3 +16,6 @@ tools/
 
 # Notebook checkpoints
 .ipynb_checkpoints/
+
+# Report.pdf
+report/main.pdf

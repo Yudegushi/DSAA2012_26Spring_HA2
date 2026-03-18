@@ -1,0 +1,9 @@
+model,taxonomy,count
+ViT-B/16,Viewpoint/Composition,410
+ViT-B/16,Fine-grained semantic neighbors,230
+ViT-B/16,Other semantic overlap,87
+ViT-B/16,Part-vs-whole ambiguity,57
+ViT-B/32,Viewpoint/Composition,441
+ViT-B/32,Fine-grained semantic neighbors,202
+ViT-B/32,Other semantic overlap,140
+ViT-B/32,Part-vs-whole ambiguity,63

@@ -10,8 +10,8 @@
 \usepackage{caption}
 
 \title{HA2 Report: CLIP Zero-Shot Classification on Caltech101}
-\author{Your Name}
-\date{\today}
+\author{Boyi ZHANG\\50013590}
+\date{}
 
 \begin{document}
 \maketitle
@@ -19,15 +19,16 @@
 \section{Summary}
 
 This project applies OpenAI CLIP to zero-shot image classification on Caltech101.
-The dataset is selected from the CLIP prompt list, and CIFAR10/CIFAR100 are excluded.
-We evaluate two CLIP backbones, \texttt{ViT-B/32} and \texttt{ViT-B/16}, under two prompt settings:
+The dataset is selected from the CLIP prompt list. We evaluate two CLIP backbones, \texttt{ViT-B/32} and \texttt{ViT-B/16}, under two prompt settings:
 a simple single-template baseline and a multi-template ensemble strategy.
 
 The final full run uses all available evaluation samples in torchvision Caltech101
 (8,677 images, 101 classes).
 Overall, \texttt{ViT-B/16} gains a small accuracy improvement from prompt ensembling,
 while \texttt{ViT-B/32} shows a slight drop.
-In both cases, McNemar tests indicate that the simple-versus-ensemble difference is not statistically significant at the 0.05 level.
+In both cases, McNemar tests indicate that the simple vs. ensemble difference is not statistically significant at the 0.05 level.
+The most important finding is not only the final score difference, but also the implementation-level behavior:
+template count is non-monotonic, optimal aggregation is backbone-dependent, and feature normalization is a first-order requirement for stable zero-shot matching.
 
 \section{Methodology}
 
@@ -37,12 +38,47 @@ We use \texttt{torchvision.datasets.Caltech101}.
 In this loader, the effective label space contains 101 classes.
 Class names are mapped to CLIP prompt labels from the official prompt documentation.
 
+The dataset has visible class imbalance.
+The largest classes contain around 800 images, while several classes have around 30 to 40 images.
+This matters for error analysis because rare classes are more likely to be confused with semantically close neighbors.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.90\linewidth]{../artifacts/figures/fig_dataset_class_rank_full.png}
+\caption{Class count ranking (top-20 and bottom-20 classes).}
+\label{fig:dataset-rank}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.78\linewidth]{../artifacts/figures/fig_dataset_count_distribution_full.png}
+\caption{Distribution of samples per class in the evaluation set.}
+\label{fig:dataset-dist}
+\end{figure}
+
 \subsection{Model and Zero-Shot Inference}
 
 We use CLIP models from the official implementation: \texttt{ViT-B/32} and \texttt{ViT-B/16}.
 The task is pure zero-shot inference; no parameter fine-tuning is performed.
 For each model, image embeddings are computed once and cached.
 Text embeddings are generated from prompt templates, then matched to image embeddings by cosine-style similarity.
+
+\subsection{Experimental Platform and Reproducibility Settings}
+
+Experiments are run on a local machine with an NVIDIA RTX 4060 GPU (8GB VRAM) in full-evaluation mode.
+The software stack is Python + PyTorch + torchvision + OpenAI CLIP.
+To keep runs reproducible, we fix global seeds and keep deterministic sample-selection logic for template subset experiments.
+
+Core setup details are:
+\begin{itemize}
+  \item Dataset: Caltech101, full evaluation set (8,677 samples).
+  \item Seeds: main seed = 3407; A1 template-subset seeds = [3407, 3408, 3409, 3410, 3411].
+  \item Batch size hints: \texttt{ViT-B/32}=128, \texttt{ViT-B/16}=64.
+  \item Runtime profile: full run with saved artifacts and figure/table export.
+\end{itemize}
+
+The measured image-encoding runtime is about 27.15s for \texttt{ViT-B/32} and 27.29s for \texttt{ViT-B/16},
+with peak allocated GPU memory below 1GB in this inference-only setup.
 
 \subsection{Prompt Settings}
 
@@ -93,6 +129,10 @@ ViT-B/32 & 0.8759 & 0.8729 & -0.0030 \\
 For \texttt{ViT-B/16}, ensembling improves accuracy slightly.
 For \texttt{ViT-B/32}, the full 34-template ensemble is slightly worse than the simple baseline.
 
+This backbone-level direction mismatch is the first signal that ensemble behavior is not universal.
+If ``more templates'' were uniformly beneficial, both models should move in the same direction.
+The opposite trend motivates the later ablation analysis.
+
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.78\linewidth]{../artifacts/figures/fig_main_bar_ci_full.png}
@@ -102,6 +142,10 @@ For \texttt{ViT-B/32}, the full 34-template ensemble is slightly worse than the 
 
 The confidence intervals are narrow for both models (around $\pm$0.007 half-width),
 which confirms stable estimates under full-data evaluation.
+At the same time, the observed deltas are small in absolute value.
+This combination (narrow CI + very small delta) suggests that the practical effect of the current ensemble setup is limited,
+rather than a high-variance estimate that needs more data.
+In short, the experiment is statistically stable, but the effect size is small.
 
 \subsection{Statistical Significance}
 
@@ -113,6 +157,16 @@ McNemar tests compare B1 and M1 on paired predictions:
 
 Both p-values are above 0.05.
 Therefore, under this setup, the ensemble effect is small and not statistically significant.
+Importantly, this should not be interpreted as ``ensemble is useless'' in general.
+The more accurate interpretation is: under the current template pool and uniform aggregation rule,
+ensemble does not provide a stable advantage over the simple baseline.
+
+From the discordant pair counts, we also see meaningful local corrections but no strong global shift.
+For \texttt{ViT-B/16}, the number of cases where ensemble corrects simple errors ($c=286$) is only moderately larger than the reverse direction ($b=254$).
+For \texttt{ViT-B/32}, the direction is inverted ($b=322$, $c=296$), again with small margin.
+This explains why effect size remains limited despite large sample size.
+It also explains why ``not significant'' here means ``no robust net benefit under current design,''
+instead of ``no local corrections at all.''
 
 \subsection{Ablations}
 
@@ -128,10 +182,39 @@ For \texttt{ViT-B/32}, increasing template count generally does not help and may
 \label{fig:a1}
 \end{figure}
 
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.84\linewidth]{../artifacts/figures/fig_template_count_seedspread_full.png}
+\caption{A1 seed-level trajectories with mean $\pm$ std overlays.}
+\label{fig:a1-seed}
+\end{figure}
+
+This non-monotonic behavior supports a ``diversity-noise trade-off'' view:
+adding templates may increase semantic coverage at first,
+but less aligned wording can later inject noise into class prototypes.
+Figure~\ref{fig:a1} shows the mean trend; Figure~\ref{fig:a1-seed} is necessary because it rules out a weaker alternative explanation,
+namely that the mean curve is caused by one atypical random subset.
+The seed-level trajectories still preserve the same overall pattern,
+so the non-monotonicity is structural rather than a single-seed artifact.
+
 \paragraph{A2: aggregation method.}
 \texttt{ViT-B/16} prefers logit-mean (0.8906) over feature-mean (0.8871),
 while \texttt{ViT-B/32} prefers feature-mean (0.8729) over logit-mean (0.8668).
 This indicates that aggregation choice should be treated as a model-dependent design option.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.72\linewidth]{../artifacts/figures/fig_a2_aggregation_full.png}
+\caption{A2 dedicated comparison: feature-mean vs logit-mean.}
+\label{fig:a2}
+\end{figure}
+
+A practical implication is that there is no universally best aggregation rule.
+The same template pool can behave differently depending on backbone geometry,
+which is consistent with the observation that \texttt{ViT-B/16} and \texttt{ViT-B/32} react in opposite directions.
+This provides direct support for a coupling hypothesis:
+ensemble performance depends on the interaction between text prototype construction and image embedding geometry,
+not only on template diversity.
 
 \paragraph{A3: normalization.}
 Normalization is clearly beneficial for both models:
@@ -143,6 +226,18 @@ Normalization is clearly beneficial for both models:
 \caption{A2 and A3 ablations.}
 \label{fig:a23}
 \end{figure}
+
+Taken together, A1--A3 form a coherent support chain:
+template count alone cannot guarantee gains; aggregation and feature scale control are equally critical.
+In other words, effective prompt ensembling is a coupled system design problem rather than a single-template-list decision.
+
+The chain is evidence-driven:
+\begin{itemize}
+  \item A1 shows that adding templates is not monotonic.
+  \item A2 shows that best aggregation differs by backbone.
+  \item Main results show that full 34-template averaging is not consistently better than simple prompting.
+  \item A3 shows that without normalization, both backbones drop substantially.
+\end{itemize}
 
 \section{Visualization and Error Analysis}
 
@@ -157,7 +252,30 @@ We inspect frequent confusion pairs and sample-level prediction cases.
 
 The most common mistakes are semantically close classes, such as:
 \textit{centered face} vs \textit{off-center face}, and \textit{ketch} vs \textit{schooner}.
-This pattern is expected in zero-shot settings, where prompt wording and visual granularity both matter.
+To avoid purely descriptive error reporting, we group major confusions into a compact taxonomy:
+\begin{itemize}
+  \item \textbf{Viewpoint/composition-sensitive errors:} e.g., centered vs off-center face.
+  \item \textbf{Fine-grained semantic neighbors:} e.g., ketch vs schooner, lotus vs water lilly.
+  \item \textbf{Part-vs-whole ambiguity:} e.g., crocodile vs head-of-crocodile categories.
+  \item \textbf{Other semantic overlaps.}
+\end{itemize}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.82\linewidth]{../artifacts/figures/fig_error_taxonomy_full.png}
+\caption{Error taxonomy aggregated from top confusion pairs.}
+\label{fig:taxonomy}
+\end{figure}
+
+The taxonomy suggests that ensembling primarily helps lexical/description mismatch in some cases,
+but is less effective for hard fine-grained visual boundaries.
+This is consistent with the mixed global effect seen in Section 3: local repairs exist, but they are not sufficient to produce robust overall gains under uniform averaging.
+
+In Figure~\ref{fig:taxonomy}, the dominant error type for both backbones is viewpoint/composition-sensitive confusion,
+followed by fine-grained semantic neighbors.
+This ordering is stable across models, although \texttt{ViT-B/32} shows a larger ``other semantic overlap'' bucket.
+The model-level pattern supports the interpretation that prompt ensembling mainly addresses textual alignment,
+while difficult visual granularity remains a separate bottleneck.
 
 \begin{figure}[H]
 \centering
@@ -183,15 +301,71 @@ First, using more templates is not always better; moderate template counts can b
 Second, the best aggregation strategy can change by backbone.
 Third, embedding normalization is essential for stable performance.
 
+Compared with common intuition that prompt ensembling should consistently improve robustness,
+our results are more conservative.
+This does not necessarily contradict the broader CLIP narrative.
+Instead, it indicates that on this dataset and this prompt pool,
+uniform averaging over all templates can dilute useful signals with mismatched wording.
+
+The argument is not based on a single observation.
+It is jointly supported by: (i) non-monotonic A1 curves, (ii) opposite A2 preferences across backbones,
+and (iii) the fact that full 34-template averaging is not consistently superior in the main comparison.
+Therefore, our evidence supports a conditional claim (ensemble quality depends on design choices),
+rather than a strong universal claim (ensemble always helps).
+
+Another point is that stronger backbone does not automatically mean larger benefit from more prompt variants.
+In our setting, \texttt{ViT-B/16} and \texttt{ViT-B/32} prefer different aggregation rules,
+which implies an interaction between text prototype construction and image feature geometry.
+This interaction is often hidden if only one aggregation variant is reported.
+
 A key limitation is that class-name mapping and template semantics can introduce bias.
 Small wording changes may alter decision boundaries in zero-shot inference.
 Future work can focus on class-conditional template selection or weighted ensembling rather than uniform averaging.
+
+Potential alternative explanations still exist.
+For example, some observed differences may be affected by specific class-frequency patterns or by template wording overlap.
+Our current evidence supports the coupling hypothesis (templates $\times$ aggregation $\times$ backbone),
+but does not fully isolate all causal factors.
+
+Two concrete alternatives are especially relevant.
+First, class imbalance may make overall accuracy dominated by head classes,
+so potential improvements on tail classes may not strongly change the final scalar metric.
+Second, wording overlap across templates may produce highly similar textual prototypes for neighbor classes,
+which can reduce discriminative gain when all templates are averaged uniformly.
+These alternatives do not contradict our findings,
+but they suggest where future targeted experiments should focus (class-balanced metrics and template weighting/selection).
+
+\section{References and Resources}
+
+\begin{itemize}
+  \item Radford et al. (2021), \textit{Learning Transferable Visual Models From Natural Language Supervision}:
+  \href{https://arxiv.org/abs/2103.00020}{arXiv:2103.00020}
+  \item OpenAI CLIP repository:
+  \href{https://github.com/openai/CLIP}{github.com/openai/CLIP}
+  \item CLIP prompt templates (Caltech101 section):
+  \href{https://github.com/openai/CLIP/blob/main/data/prompts.md}{prompts.md on GitHub}
+  \item CLIP model-name list in source code:
+  \href{https://github.com/openai/CLIP/blob/dcba3cb2e2827b402d2701e7e1c7d9fed8a20ef1/clip/clip.py#L30}{clip.py model list (line 30)}
+  \item torchvision Caltech101 dataset documentation:
+  \href{https://pytorch.org/vision/stable/generated/torchvision.datasets.Caltech101.html}{torchvision Caltech101 docs}
+  \item Project repository (this assignment):
+  \href{https://github.com/Yudegushi/DSAA2012_26Spring_HA2}{github.com/Yudegushi/DSAA2012\_26Spring\_HA2}
+\end{itemize}
 
 \section{Conclusion}
 
 This work implements and evaluates CLIP zero-shot classification on Caltech101 with both simple and ensemble prompts.
 The final results show a small gain for \texttt{ViT-B/16} and a small drop for \texttt{ViT-B/32} when using all ensemble templates.
-Although the average gains are limited in this setting, the ablations provide clear guidance on effective implementation choices,
-especially for aggregation design, template count selection, and normalization.
+Although the average gains are limited in this setting, the ablations provide clear guidance on effective implementation choices.
+
+The main transferable takeaways are:
+\begin{itemize}
+  \item Prompt ensembling is \textbf{not monotonic} in template count.
+  \item The best aggregation rule is \textbf{backbone-dependent}, not universal.
+  \item Feature normalization is a \textbf{first-order choice} for stable zero-shot CLIP matching.
+\end{itemize}
+
+Therefore, practical prompt engineering for CLIP should optimize the full inference recipe,
+instead of assuming that adding more templates will always help.
 
 \end{document}

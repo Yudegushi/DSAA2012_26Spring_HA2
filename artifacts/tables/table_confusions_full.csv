@@ -11,6 +11,19 @@ gt,pred,count,model,gt_name,pred_name,pair
 28,29,12,ViT-B/16,crocodile,head of a  crocodile,crocodile -> head of a  crocodile
 29,28,11,ViT-B/16,head of a  crocodile,crocodile,head of a  crocodile -> crocodile
 0,63,10,ViT-B/16,centered face,menorah,centered face -> menorah
+0,85,8,ViT-B/16,centered face,stapler,centered face -> stapler
+0,37,7,ViT-B/16,centered face,emu,centered face -> emu
+5,50,7,ViT-B/16,airplane,helicopter,airplane -> helicopter
+35,61,6,ViT-B/16,electric guitar,mandolin,electric guitar -> mandolin
+81,27,6,ViT-B/16,scorpion,crayfish,scorpion -> crayfish
+5,2,6,ViT-B/16,airplane,leopard,airplane -> leopard
+0,17,6,ViT-B/16,centered face,camera,centered face -> camera
+24,25,5,ViT-B/16,body of a cougar cat,face of a cougar cat,body of a cougar cat -> face of a cougar cat
+58,44,5,ViT-B/16,llama,gerenuk,llama -> gerenuk
+16,34,5,ViT-B/16,butterfly,dragonfly,butterfly -> dragonfly
+26,27,5,ViT-B/16,crab,crayfish,crab -> crayfish
+79,55,5,ViT-B/16,schooner,ketch,schooner -> ketch
+97,24,5,ViT-B/16,wild cat,body of a cougar cat,wild cat -> body of a cougar cat
 0,1,278,ViT-B/32,centered face,off-center face,centered face -> off-center face
 1,0,163,ViT-B/32,off-center face,centered face,off-center face -> centered face
 55,79,103,ViT-B/32,ketch,schooner,ketch -> schooner
@@ -23,3 +36,16 @@ gt,pred,count,model,gt_name,pred_name,pair
 59,27,19,ViT-B/32,lobster,crayfish,lobster -> crayfish
 28,29,18,ViT-B/32,crocodile,head of a  crocodile,crocodile -> head of a  crocodile
 0,25,16,ViT-B/32,centered face,face of a cougar cat,centered face -> face of a cougar cat
+81,27,13,ViT-B/32,scorpion,crayfish,scorpion -> crayfish
+35,61,11,ViT-B/32,electric guitar,mandolin,electric guitar -> mandolin
+34,62,9,ViT-B/32,dragonfly,mayfly,dragonfly -> mayfly
+24,25,9,ViT-B/32,body of a cougar cat,face of a cougar cat,body of a cougar cat -> face of a cougar cat
+42,41,8,ViT-B/32,head of a flamingo,flamingo,head of a flamingo -> flamingo
+29,28,7,ViT-B/32,head of a  crocodile,crocodile,head of a  crocodile -> crocodile
+5,50,7,ViT-B/32,airplane,helicopter,airplane -> helicopter
+10,73,7,ViT-B/32,beaver,platypus,beaver -> platypus
+23,63,6,ViT-B/32,chandelier,menorah,chandelier -> menorah
+27,81,4,ViT-B/32,crayfish,scorpion,crayfish -> scorpion
+2,25,4,ViT-B/32,leopard,face of a cougar cat,leopard -> face of a cougar cat
+65,18,4,ViT-B/32,minaret,cannon,minaret -> cannon
+0,43,4,ViT-B/32,centered face,garfield,centered face -> garfield
