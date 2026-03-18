@@ -246,7 +246,7 @@ We inspect frequent confusion pairs and sample-level prediction cases.
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.84\linewidth]{../artifacts/figures/fig_top_confusions_full.png}
-\caption{Top confusion pairs under ensemble predictions.}
+\caption{Top confusion pairs under ensemble predictions, shown separately for each backbone.}
 \label{fig:conf}
 \end{figure}
 
@@ -270,6 +270,9 @@ To avoid purely descriptive error reporting, we group major confusions into a co
 The taxonomy suggests that ensembling primarily helps lexical/description mismatch in some cases,
 but is less effective for hard fine-grained visual boundaries.
 This is consistent with the mixed global effect seen in Section 3: local repairs exist, but they are not sufficient to produce robust overall gains under uniform averaging.
+
+Figure~\ref{fig:conf} is presented as two per-backbone panels to avoid missing-bar artifacts in shared-pair grouped bars,
+so each model's confusion ranking can be read directly.
 
 In Figure~\ref{fig:taxonomy}, the dominant error type for both backbones is viewpoint/composition-sensitive confusion,
 followed by fine-grained semantic neighbors.
