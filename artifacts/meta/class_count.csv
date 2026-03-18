@@ -1,0 +1,102 @@
+label_id,dataset_category,prompt_class,n_samples
+0,Faces,centered face,435
+1,Faces_easy,off-center face,435
+2,Leopards,leopard,200
+3,Motorbikes,motorbike,798
+4,accordion,accordion,55
+5,airplanes,airplane,800
+6,anchor,anchor,42
+7,ant,ant,42
+8,barrel,barrel,47
+9,bass,bass,54
+10,beaver,beaver,46
+11,binocular,binocular,33
+12,bonsai,bonsai,128
+13,brain,brain,98
+14,brontosaurus,brontosaurus,43
+15,buddha,buddha,85
+16,butterfly,butterfly,91
+17,camera,camera,50
+18,cannon,cannon,43
+19,car_side,side of a car,123
+20,ceiling_fan,ceiling fan,47
+21,cellphone,cellphone,59
+22,chair,chair,62
+23,chandelier,chandelier,107
+24,cougar_body,body of a cougar cat,47
+25,cougar_face,face of a cougar cat,69
+26,crab,crab,73
+27,crayfish,crayfish,70
+28,crocodile,crocodile,50
+29,crocodile_head,head of a  crocodile,51
+30,cup,cup,57
+31,dalmatian,dalmatian,67
+32,dollar_bill,dollar bill,52
+33,dolphin,dolphin,65
+34,dragonfly,dragonfly,68
+35,electric_guitar,electric guitar,75
+36,elephant,elephant,64
+37,emu,emu,53
+38,euphonium,euphonium,64
+39,ewer,ewer,85
+40,ferry,ferry,67
+41,flamingo,flamingo,67
+42,flamingo_head,head of a flamingo,45
+43,garfield,garfield,34
+44,gerenuk,gerenuk,34
+45,gramophone,gramophone,51
+46,grand_piano,grand piano,99
+47,hawksbill,hawksbill,100
+48,headphone,headphone,42
+49,hedgehog,hedgehog,54
+50,helicopter,helicopter,88
+51,ibis,ibis,80
+52,inline_skate,inline skate,31
+53,joshua_tree,joshua tree,64
+54,kangaroo,kangaroo,86
+55,ketch,ketch,114
+56,lamp,lamp,61
+57,laptop,laptop,81
+58,llama,llama,78
+59,lobster,lobster,41
+60,lotus,lotus,66
+61,mandolin,mandolin,43
+62,mayfly,mayfly,40
+63,menorah,menorah,87
+64,metronome,metronome,32
+65,minaret,minaret,76
+66,nautilus,nautilus,55
+67,octopus,octopus,35
+68,okapi,okapi,39
+69,pagoda,pagoda,47
+70,panda,panda,38
+71,pigeon,pigeon,45
+72,pizza,pizza,53
+73,platypus,platypus,34
+74,pyramid,pyramid,57
+75,revolver,revolver,82
+76,rhino,rhino,59
+77,rooster,rooster,49
+78,saxophone,saxophone,40
+79,schooner,schooner,63
+80,scissors,scissors,39
+81,scorpion,scorpion,84
+82,sea_horse,sea horse,57
+83,snoopy,snoopy (cartoon beagle),35
+84,soccer_ball,soccer ball,64
+85,stapler,stapler,45
+86,starfish,starfish,86
+87,stegosaurus,stegosaurus,59
+88,stop_sign,stop sign,64
+89,strawberry,strawberry,35
+90,sunflower,sunflower,85
+91,tick,tick,49
+92,trilobite,trilobite,86
+93,umbrella,umbrella,75
+94,watch,watch,239
+95,water_lilly,water lilly,37
+96,wheelchair,wheelchair,59
+97,wild_cat,wild cat,34
+98,windsor_chair,windsor chair,56
+99,wrench,wrench,39
+100,yin_yang,yin and yang symbol,60

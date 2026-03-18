@@ -1,0 +1,19 @@
+{
+  "runtime_profile": "local_4060",
+  "dataset_name": "Caltech101",
+  "seed_main": 3407,
+  "project_root": "D:\\code\\HA2",
+  "data_root": "D:\\code\\HA2\\data",
+  "artifacts_root": "D:\\code\\HA2\\artifacts",
+  "figures_root": "D:\\code\\HA2\\artifacts\\figures",
+  "batch_hint": {
+    "ViT-B/32": 128,
+    "ViT-B/16": 64
+  },
+  "num_workers": 2,
+  "models": [
+    "ViT-B/32",
+    "ViT-B/16"
+  ],
+  "simple_template": "a photo of a {CLASS}."
+}

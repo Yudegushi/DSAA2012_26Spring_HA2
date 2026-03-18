@@ -1,0 +1,27 @@
+{
+  "checks": {
+    "pred_count_match": true,
+    "pred_id_range": true,
+    "label_id_range": true,
+    "k34_present": true,
+    "k1_close_to_b1": true
+  },
+  "k1_compare": [
+    {
+      "run_mode": "full",
+      "model": "ViT-B/16",
+      "acc_k1_mean": 0.8833698282816641,
+      "acc_b1": 0.8833698282816642,
+      "abs_diff": 1.1102230246251565e-16
+    },
+    {
+      "run_mode": "full",
+      "model": "ViT-B/32",
+      "acc_k1_mean": 0.8758787599400716,
+      "acc_b1": 0.8758787599400715,
+      "abs_diff": 1.1102230246251565e-16
+    }
+  ],
+  "run_mode": "full",
+  "n_samples": 8677
+}

@@ -1,0 +1,8 @@
+{
+  "dataset_len": 8677,
+  "n_categories": 101,
+  "n_templates_full": 34,
+  "n_templates_simple": 1,
+  "eval_size": 8677,
+  "smoke_size": 1010
+}

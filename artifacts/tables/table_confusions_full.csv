@@ -1,0 +1,25 @@
+gt,pred,count,model,gt_name,pred_name,pair
+0,1,275,ViT-B/16,centered face,off-center face,centered face -> off-center face
+1,0,135,ViT-B/16,off-center face,centered face,off-center face -> centered face
+55,79,98,ViT-B/16,ketch,schooner,ketch -> schooner
+60,95,45,ViT-B/16,lotus,water lilly,lotus -> water lilly
+22,98,41,ViT-B/16,chair,windsor chair,chair -> windsor chair
+42,41,24,ViT-B/16,head of a flamingo,flamingo,head of a flamingo -> flamingo
+59,27,22,ViT-B/16,lobster,crayfish,lobster -> crayfish
+34,62,19,ViT-B/16,dragonfly,mayfly,dragonfly -> mayfly
+97,2,16,ViT-B/16,wild cat,leopard,wild cat -> leopard
+28,29,12,ViT-B/16,crocodile,head of a  crocodile,crocodile -> head of a  crocodile
+29,28,11,ViT-B/16,head of a  crocodile,crocodile,head of a  crocodile -> crocodile
+0,63,10,ViT-B/16,centered face,menorah,centered face -> menorah
+0,1,278,ViT-B/32,centered face,off-center face,centered face -> off-center face
+1,0,163,ViT-B/32,off-center face,centered face,off-center face -> centered face
+55,79,103,ViT-B/32,ketch,schooner,ketch -> schooner
+22,98,37,ViT-B/32,chair,windsor chair,chair -> windsor chair
+60,95,34,ViT-B/32,lotus,water lilly,lotus -> water lilly
+1,25,23,ViT-B/32,off-center face,face of a cougar cat,off-center face -> face of a cougar cat
+97,2,22,ViT-B/32,wild cat,leopard,wild cat -> leopard
+41,42,21,ViT-B/32,flamingo,head of a flamingo,flamingo -> head of a flamingo
+26,27,19,ViT-B/32,crab,crayfish,crab -> crayfish
+59,27,19,ViT-B/32,lobster,crayfish,lobster -> crayfish
+28,29,18,ViT-B/32,crocodile,head of a  crocodile,crocodile -> head of a  crocodile
+0,25,16,ViT-B/32,centered face,face of a cougar cat,centered face -> face of a cougar cat
